@@ -30,7 +30,7 @@ Pillow==6.0.0
 
 
 
-####Gauss filter
+#### Gauss filter
 
 ![d_5](./images/d_5.png) ![d_10](./images/d_10.png) 
 
