@@ -26,7 +26,7 @@ Pillow==6.0.0
 
 ## Domain Transform
 
-![d](./images/d.png){:height="30%" width="30%"} ![d_fgsm](./images/d_fgsm.png) 
+![d](./images/d.png) ![d_fgsm](./images/d_fgsm.png) 
 
 
 
