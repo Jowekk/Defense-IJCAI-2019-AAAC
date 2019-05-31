@@ -94,8 +94,7 @@ def main(_):
         edge_tensor = tf_preprocessing(x_input, 'inception', 299,299) 
         with slim.arg_scope(inception_resnet_v2.inception_resnet_v2_arg_scope()):
             edge_logits, edge_end_points = inception_resnet_v2.inception_resnet_v2(
-                      edge_tensor, num_classes=nb_classes, is_training=False, scope='edge_in_re_v2') # is_training=False pass
-            #edge_logits = (edge_logits + edge_end_points['AuxLogits']) /2.0 
+                      edge_tensor, num_classes=nb_classes, is_training=False, scope='edge_in_re_v2') 
 
         with slim.arg_scope(inception_v4.inception_v4_arg_scope()):
             logits_edge_ince_v4, _ = inception_v4.inception_v4(
@@ -104,19 +103,17 @@ def main(_):
         edge_res_tensor = tf_preprocessing(x_input, 'vgg', 224,224) 
         with slim.arg_scope(resnet_v1.resnet_arg_scope()):
             edge_logits_res_v1, _ = resnet_v1.resnet_v1_152(
-                      edge_res_tensor, num_classes=110, is_training=True, scope='edge_resnet_v1_152') # is_training=True pass
+                      edge_res_tensor, num_classes=110, is_training=True, scope='edge_resnet_v1_152') 
 
 
         defense_tensor = tf_preprocessing(ten_input, 'inception', 299,299) 
         with slim.arg_scope(inception_resnet_v2.inception_resnet_v2_arg_scope()):
             defense_Ten_logits, defense_Ten_end_points = inception_resnet_v2.inception_resnet_v2(
                       defense_tensor, num_classes=nb_classes, is_training=False, scope='Ten_Filter_Defense')
-            #defense_Ten_logits = (defense_Ten_logits + defense_Ten_end_points['AuxLogits']) /2.0 
 
         with slim.arg_scope(inception_v4.inception_v4_arg_scope()):
             logits_Ten_ince_v4, Ten_in_v4_end_points = inception_v4.inception_v4(
                   defense_tensor, num_classes=nb_classes, is_training=False, scope='ten_filter_inception_v4')
-            #logits_Ten_ince_v4 = (logits_Ten_ince_v4 + Ten_in_v4_end_points['AuxLogits']) / 2.0
 
         mobi_Ten_tensor = tf_preprocessing(ten_input, 'inception', 224,224) 
         with slim.arg_scope(mobilenet_v2.training_scope()):
@@ -141,12 +138,10 @@ def main(_):
         with slim.arg_scope(inception_resnet_v2.inception_resnet_v2_arg_scope()):
             defense_fgsm_logits, defense_fgsm_end_points = inception_resnet_v2.inception_resnet_v2(
                       in_tensor, num_classes=nb_classes, is_training=True, scope='fgsm_Defense')
-            #defense_fgsm_logits = (defense_fgsm_logits + defense_fgsm_end_points['AuxLogits']) /2.0
 
         with slim.arg_scope(inception_resnet_v2.inception_resnet_v2_arg_scope()):
             mask_logits, mask_end_points = inception_resnet_v2.inception_resnet_v2(
                       in_tensor, num_classes=nb_classes, is_training=True, scope='Mask_attack')
-            #mask_logits = (mask_logits + mask_end_points['AuxLogits']) /2.0
 
         with slim.arg_scope(inception_resnet_v2.inception_resnet_v2_arg_scope()):
             logits_inc_res_v2, _ = inception_resnet_v2.inception_resnet_v2(
@@ -155,12 +150,10 @@ def main(_):
         with slim.arg_scope(inception_v4.inception_v4_arg_scope()):
             logits_ince_v4, in_v4_end_points = inception_v4.inception_v4(
                   in_tensor, num_classes=nb_classes, is_training=True, scope='InceptionV4')
-            #logits_ince_v4 = (logits_ince_v4 + in_v4_end_points['AuxLogits']) / 2.0
 
         with slim.arg_scope(inception_v3.inception_v3_arg_scope()):
             logits_ince_v3, in_v3_end_points = inception_v3.inception_v3(
                   in_tensor, num_classes=nb_classes, is_training=True, scope='InceptionV3')
-            #logits_ince_v3 = (logits_ince_v3 + in_v3_end_points['AuxLogits']) / 2.0
 
         res_tensor = tf_preprocessing(five_input, 'vgg', 224,224) 
         with slim.arg_scope(resnet_v2.resnet_arg_scope()):
@@ -225,7 +218,6 @@ def main(_):
         defense_edge_saver = tf.train.Saver(slim.get_model_variables(scope='edge_in_re_v2'))
 
 
-        #session_creator = tf.train.ChiefSessionCreator()
         # Run computation
         with tf.Session() as sess:
 
