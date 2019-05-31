@@ -30,9 +30,9 @@
 #  Mask_attack        inception resnet v2        mask       Y          N       +0.19        0.60975
 #  Inception_v2           Inception v2           mask       Y          N       +0.04        0.5759
 
-#edge_in_re_v2   inception resnet v2   Edge preserve   N          N       +0.19        0.6994
-#edge_resnet_v1_152    resnet v1 152   Edge preserve   N          N       +0.05        0.64305
-#edge_inception_v4    inception v4     Edge preserve   N          N       -0.03        0.6118 
+#edge_in_re_v2   inception resnet v2        Edge preserve   N          N       +0.19        0.6994
+#edge_resnet_v1_152    resnet v1 152        Edge preserve   N          N       +0.05        0.64305
+#edge_inception_v4    inception v4          Edge preserve   N          N       -0.03        0.6118 
 
 
 
