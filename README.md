@@ -1,6 +1,10 @@
 # Defense [IJCAI-2019 Alibaba Adversarial AI Challenge (AAAC 2019)](https://tianchi.aliyun.com/markets/tianchi/ijcai2019))
 
-## 介绍
+## Introduction
+
+ The original neural network is very vulnerable to attack. The general defense method is to design a denoising method of filtering images or feature maps to reduce the impact of attack. In practice, the denoising method has certain limitations, such as the inability to process images which miss key areas. We propose a novel method composed multiple image domain transformations which can defend most of the black-box adversarial attacks. The image domain transformations include image multi-scale space representation, edge-preserving filtering and adversarial complementary learning of significant area mask. These three types of transformations defend against completely different attack methods. Compared to most current defense methods, the proposed method is very robust. The project based on our method placed second in recent IJCAI-2019 Alibaba Adversarial AI Challenge (AAAC 2019)).
+
+
 
 这是IJCAI-19 阿里巴巴人工智能对抗算法竞赛防御赛道排名第二的方案．
 
@@ -8,7 +12,34 @@
 
 
 
+## Prerequisites
+
+~~~
+scipy==1.2.0
+opencv_python==3.2.0.8
+tensorflow_gpu==1.1.0
+numpy==1.15.4
+Pillow==6.0.0
+~~~
 
 
 
+## Domain Transform
 
+![d](./images/d.png){:height="30%" width="30%"} ![d_fgsm](./images/d_fgsm.png) 
+
+
+
+####Gauss filter
+
+![d_5](./images/d_5.png) ![d_10](./images/d_10.png) 
+
+#### Edge preserving filter
+
+![d_fgsm](./images/d_fgsm.png)  ![d_hold](./images/d_hold.png)
+
+#### GradCAM 
+
+![d](./images/d.png) ![d_cam](./images/d_cam.png) 
+
+![d_mask](./images/d_mask.png) ![d_rand](./images/d_rand.png)
