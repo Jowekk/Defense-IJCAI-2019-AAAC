@@ -1,38 +1,38 @@
 #########################################################################################################################################
-#   name                    model              dataset    filter   Teacher    is_training   score      test accuracy     NOTICE
-# fgsm_Defense        inception resnet v2       fgsm        N          Y         ??         +0.07                          TODO
-#  ATN_Defense        inception resnet v2       ATN         N          Y                    -0.01      
+#   name                    model              dataset    filter   Teacher     score      test accuracy     NOTICE
+# fgsm_Defense        inception resnet v2       fgsm        N          Y       +0.07                          TODO
+#  ATN_Defense        inception resnet v2       ATN         N          Y       -0.01      
 #  adv_Defense        inception resnet v2    fgsm + ATN     Y          Y
-#CAM_Defense_in_re_v2 inception resnet v2        CAM        N          Y                    -0.34/2
-#  Defense_vgg              vgg 16               fgsm       Y          Y                    -0.13/2
-#Defense_Inception_v4_fgsm   inception v4        fgsm       Y          Y                    -0.34/2
+#CAM_Defense_in_re_v2 inception resnet v2        CAM        N          Y       -0.34/2
+#  Defense_vgg              vgg 16               fgsm       Y          Y       -0.13/2
+#Defense_Inception_v4_fgsm   inception v4        fgsm       Y          Y       -0.34/2
 #
-#InceptionResnetV2    inception resnet v2        fgsm       Y          N         True 
-#  resnet_v2_152           resnet v2             fgsm       Y          N          ??                     0.6634
-#   inception             inception V1           fgsm       Y          N          ??        +0.03        0.57845
-#  MobilenetV2            MobilenetV2            fgsm       Y          N          ??                     0.60855
-#  InceptionV4            inception v4           fgsm       Y          N         True       +0.29 ??     0.65525
-#     VGG_19                 vgg 19              fgsm       Y          N          \         -0.02        0.55355
-# fgsm_inception_v3       inception v3           fgsm       Y          N          |         -0.09        0.61545          TODO submit
+#InceptionResnetV2    inception resnet v2        fgsm       Y          N 
+#  resnet_v2_152           resnet v2             fgsm       Y          N       0.6634
+#   inception             inception V1           fgsm       Y          N       +0.03        0.57845
+#  MobilenetV2            MobilenetV2            fgsm       Y          N                    0.60855
+#  InceptionV4            inception v4           fgsm       Y          N       +0.29 ??     0.65525
+#     VGG_19                 vgg 19              fgsm       Y          N       -0.02        0.55355
+# fgsm_inception_v3       inception v3           fgsm       Y          N       -0.09        0.61545          TODO submit
 
-#Ten_Filter_Defense   inception resnet v2        fgsm      Ten         N        False       +0.41        0.6136
-#  resnet_v1_101         resnet v1 101           fgsm      Ten         N         ??         +0.18        0.57005
-#     VGG_16                 vgg 16              fgsm      Ten         N         ??         +0.13        0.5029           TODO next training
-#ten_filter_inception_v4  inception v4           fgsm      Ten         N        False       +0.14        0.53835          TODO next training, already
-#  resnet_v1_50           resnet v1 50           fgsm      Ten         N        False       +0.03???     0.55865
-#Ten_filter_MobilenetV2   mobilenet v2 140       fgsm      Ten         N        True??      -0.03??      0.5874           TODO is_training ??
+#Ten_Filter_Defense   inception resnet v2        fgsm      Ten         N       +0.41        0.6136
+#  resnet_v1_101         resnet v1 101           fgsm      Ten         N       +0.18        0.57005
+#     VGG_16                 vgg 16              fgsm      Ten         N       +0.13        0.5029           TODO next training
+#ten_filter_inception_v4  inception v4           fgsm      Ten         N       +0.14        0.53835          TODO next training, already
+#  resnet_v1_50           resnet v1 50           fgsm      Ten         N       +0.03???     0.55865
+#Ten_filter_MobilenetV2   mobilenet v2 140       fgsm      Ten         N       -0.03??      0.5874           
 
-#  InceptionV3            InceptionV3          rand cam     Y          N         True       +0.248       0.6405                15.6540
-#  resnet_v1_152          resnet v1 152        rand cam     Y          N          ??        +0.13        0.6509
-#filter_rand_resnet_50      resnet 50          rand cam     Y          N         True       -0.01        0.6506           TODO submit
-#filter_rand_in_re_v2  inception resnet v2     rand cam     Y          N         (True)??   -0.05  XX, don't use this
+#  InceptionV3            InceptionV3          rand cam     Y          N       +0.248       0.6405           15.6540
+#  resnet_v1_152          resnet v1 152        rand cam     Y          N       +0.13        0.6509
+#filter_rand_resnet_50      resnet 50          rand cam     Y          N       -0.01        0.6506           TODO submit
+#filter_rand_in_re_v2  inception resnet v2     rand cam     Y          N       -0.05  XX, don't use this
 
-#  Mask_attack        inception resnet v2        mask       Y          N         True       +0.19        0.60975
-#  Inception_v2           Inception v2           mask       Y          N          ??        +0.04        0.5759
+#  Mask_attack        inception resnet v2        mask       Y          N       +0.19        0.60975
+#  Inception_v2           Inception v2           mask       Y          N       +0.04        0.5759
 
-#hold_edge_in_re_v2   inception resnet v2      hold edge    N          N         False      +0.19        0.6994
-#hold_edge_resnet_v1_152    resnet v1 152      hold edge    N          N         True       +0.05        0.64305
-#hold_edge_inception_v4    inception v4        hold edge    N          N         False      -0.03        0.6118 
+#edge_in_re_v2   inception resnet v2   Edge preserve   N          N       +0.19        0.6994
+#edge_resnet_v1_152    resnet v1 152   Edge preserve   N          N       +0.05        0.64305
+#edge_inception_v4    inception v4     Edge preserve   N          N       -0.03        0.6118 
 
 
 
@@ -57,7 +57,7 @@ from load_and_save_imgs import load_images
 from scipy.ndimage import filters
 slim = tf.contrib.slim
 
-def hold_edge(A):
+def edge_preserving(A):
     B = np.zeros((A.shape), dtype=np.float32)
     for i in range(A.shape[0]):
         B[i,:,:,:] = cv2.edgePreservingFilter(A[i,:,:,:], flags=1, sigma_s=30, sigma_r=0.6)
@@ -94,17 +94,17 @@ def main(_):
         edge_tensor = tf_preprocessing(x_input, 'inception', 299,299) 
         with slim.arg_scope(inception_resnet_v2.inception_resnet_v2_arg_scope()):
             edge_logits, edge_end_points = inception_resnet_v2.inception_resnet_v2(
-                      edge_tensor, num_classes=nb_classes, is_training=False, scope='hold_edge_in_re_v2') # is_training=False pass
+                      edge_tensor, num_classes=nb_classes, is_training=False, scope='edge_in_re_v2') # is_training=False pass
             #edge_logits = (edge_logits + edge_end_points['AuxLogits']) /2.0 
 
         with slim.arg_scope(inception_v4.inception_v4_arg_scope()):
             logits_edge_ince_v4, _ = inception_v4.inception_v4(
-                  edge_tensor, num_classes=nb_classes, is_training=False, scope='hold_edge_inception_v4')
+                  edge_tensor, num_classes=nb_classes, is_training=False, scope='edge_inception_v4')
 
         edge_res_tensor = tf_preprocessing(x_input, 'vgg', 224,224) 
         with slim.arg_scope(resnet_v1.resnet_arg_scope()):
             edge_logits_res_v1, _ = resnet_v1.resnet_v1_152(
-                      edge_res_tensor, num_classes=110, is_training=True, scope='hold_edge_resnet_v1_152') # is_training=True pass
+                      edge_res_tensor, num_classes=110, is_training=True, scope='edge_resnet_v1_152') # is_training=True pass
 
 
         defense_tensor = tf_preprocessing(ten_input, 'inception', 299,299) 
@@ -212,17 +212,17 @@ def main(_):
         s6 = tf.train.Saver(slim.get_model_variables(scope='InceptionV3'))
         s7 = tf.train.Saver(slim.get_model_variables(scope='resnet_v1_152'))
         s8 = tf.train.Saver(slim.get_model_variables(scope='InceptionV2'))
-        s9 = tf.train.Saver(slim.get_model_variables(scope='hold_edge_resnet_v1_152'))
+        s9 = tf.train.Saver(slim.get_model_variables(scope='edge_resnet_v1_152'))
         s10 = tf.train.Saver(slim.get_model_variables(scope='vgg_16'))
         s12 = tf.train.Saver(slim.get_model_variables(scope='ten_filter_inception_v4'))
         s13 = tf.train.Saver(slim.get_model_variables(scope='resnet_v1_50'))
         s14 = tf.train.Saver(slim.get_model_variables(scope='Ten_filter_MobilenetV2'))
-        s15 = tf.train.Saver(slim.get_model_variables(scope='hold_edge_inception_v4'))
+        s15 = tf.train.Saver(slim.get_model_variables(scope='edge_inception_v4'))
 
         defense_fgsm_saver = tf.train.Saver(slim.get_model_variables(scope='fgsm_Defense'))
         defense_mask_saver = tf.train.Saver(slim.get_model_variables(scope='Mask_attack'))
         defense_Ten_saver = tf.train.Saver(slim.get_model_variables(scope='Ten_Filter_Defense'))
-        defense_edge_saver = tf.train.Saver(slim.get_model_variables(scope='hold_edge_in_re_v2'))
+        defense_edge_saver = tf.train.Saver(slim.get_model_variables(scope='edge_in_re_v2'))
 
 
         #session_creator = tf.train.ChiefSessionCreator()
@@ -238,23 +238,23 @@ def main(_):
             s6.restore(sess, "./mymodels/inception_v3/inception_v3.ckpt")
             s7.restore(sess, "./mymodels/resnet_v1_152/resnet_v1_152.ckpt")
             s8.restore(sess, "./mymodels/inception_v2/inception_v2.ckpt") 
-            s9.restore(sess, "./mymodels/hold_edge_resnet_v1_152/hold_edge_resnet_v1_152.ckpt") 
+            s9.restore(sess, "./mymodels/edge_resnet_v1_152/edge_resnet_v1_152.ckpt") 
             s10.restore(sess, "./mymodels/ten_filter_vgg16/vgg_16.ckpt") 
             s12.restore(sess, "./mymodels/ten_filter_inception_v4/ten_filter_inception_v4.ckpt") 
             s13.restore(sess, "./mymodels/ten_filter_resnet_v1_50/ten_filter_resnet_v1_50.ckpt") 
             s14.restore(sess, "./mymodels/ten_filter_mobilenet/ten_filter_mobilenet.ckpt") 
-            s15.restore(sess, "./mymodels/hold_edge_inception_v4/hold_edge_inception_v4.ckpt") 
+            s15.restore(sess, "./mymodels/edge_inception_v4/edge_inception_v4.ckpt") 
 
             defense_fgsm_saver.restore(sess, "./mymodels/fgsm_defense/defense.ckpt-82000")
             defense_Ten_saver.restore(sess, "./mymodels/ten_filter_defense/ten_filter.ckpt") 
             defense_mask_saver.restore(sess, "./mymodels/mask_attack/mask.ckpt") 
-            defense_edge_saver.restore(sess, "./mymodels/hold_edge_in_re_v2/edge.ckpt") 
+            defense_edge_saver.restore(sess, "./mymodels/edge_in_re_v2/edge.ckpt") 
 
-            #s15.save(sess, "./mymodels/hold_edge_inception_v4.ckpt")
+            #s15.save(sess, "./mymodels/edge_inception_v4.ckpt")
 
             with open(FLAGS.output_file, 'w') as out_file:
                 for filenames, images in load_images(FLAGS.input_dir, batch_shape):
-                    edge_imgs = hold_edge(images)
+                    edge_imgs = edge_preserving(images)
                     five_filter = gauss_filter(images, 5)
                     ten_filter = gauss_filter(images, 10)
                     logits_val = sess.run(logits_tensor, feed_dict={five_input: five_filter, 
