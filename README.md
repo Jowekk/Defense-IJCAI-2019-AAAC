@@ -26,6 +26,8 @@ Pillow==6.0.0
 
 ## Domain Transform
 
+the MI-FGSM attack
+
 ![d](./images/d.png) ![d_fgsm](./images/d_fgsm.png) 
 
 
@@ -42,4 +44,48 @@ Pillow==6.0.0
 
 ![d](./images/d.png) ![d_cam](./images/d_cam.png) 
 
-![d_mask](./images/d_mask.png) ![d_rand](./images/d_rand.png)
+![d_mask](./images/d_mask.png) ![d_rand](./images/d_rand.png) 
+
+
+
+#### Usage
+
+1. Download the data sets:  [AAAC-2019 data sets](https://tianchi.aliyun.com/competition/entrance/231701/information)
+
+2. ~~~shell
+   cd domain_transform/
+   python get_list.py # get the image names list
+   #---- images domain transformations for adversarial training ---#
+   python mifgsm_gene.py
+   python cam_fgsm_gene.py
+   python cam_mask_gene.py
+   python edge_preserve.py
+   python gauss_filter.py
+
+   cd ..
+   ~~~
+
+3. ~~~shell
+   # make tfrecord.
+   cd make_data
+   # Change the path in make_data.sh to your path
+   sh make_data.sh
+   cd ..
+   ~~~
+
+4. Download the slim: [models and Checkpoints](https://github.com/tensorflow/models/tree/master/research/slim) 
+
+5. Adversarial training
+
+   ~~~shell
+   # using the xxx.sh in slim_train to train
+   sh finetune_alexnet_v2_on_IJCAI.sh
+   ~~~
+
+6. Collect all Adversarial training models and execute defenses
+
+   ~~~shell
+   sh run.sh
+   ~~~
+
+   ​
