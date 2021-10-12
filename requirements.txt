@@ -1,5 +1,5 @@
 scipy==1.2.0
-opencv_python==3.2.0.8
+opencv_python==3.4.7.28
 tensorflow_gpu==1.1.0
 numpy==1.15.4
 Pillow==6.0.0
